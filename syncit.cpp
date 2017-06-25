@@ -5,16 +5,23 @@
 
 #include "include/filewatcher.h"
 
+bool isForked = false;
+
 int daemonize()
 {
         pid_t pid, sid;
 
         pid = fork();
-        if (pid < 0)
+        if ( pid < 0 )
             return EXIT_FAILURE;
+        if ( pid > 0)
+        {
+            std::cout << " Daemon PID : " << pid << std::endl;
+            exit(EXIT_SUCCESS);
+        }
 
         // full permissions to files created by the daemon
-        umask(0);
+        //umask(0);
 
         // Get sid from kernel
         sid = setsid();
@@ -24,10 +31,15 @@ int daemonize()
             std::cout << "SID : " << sid << std::endl;
 
         // change current directory
-        if ( chdir("/") < 0 )
+        int ret = chdir("/");
+        if ( ret < 0 )
+        {
+            std::cout << "CHDIR failed with code : " << ret << std::endl;
             return EXIT_FAILURE;
+        }
 
         // close standard input/outputs
+
         close(STDIN_FILENO);
         close(STDOUT_FILENO);
         close(STDERR_FILENO);
@@ -47,7 +59,7 @@ void AskToDaemonize()
             ret = daemonize();
             if ( ret != EXIT_SUCCESS )
             {
-                std::cout << "\n Error : Daemonization failed ! " << std::endl;
+                std::cout << "\n Error : Daemonization failed !  ( ret = " << ret << " )" << std::endl;
                 return;
             }
         }
@@ -59,10 +71,14 @@ int main ()
 
         AskToDaemonize();
 
+        //FileWatcher fw;
+        
         while ( true )
         {
-            Logger::LogInfo("Checking");
             sleep(2);
+            Logger::LogInfo("running");
+            //if ( !fw.IsWatching() )
+            //    fw.StartWatch();
         }
 
         return EXIT_SUCCESS;

@@ -1,0 +1,8 @@
+clear;
+echo "\nCompiling ...  ";
+g++ syncit.cpp src/logger.cpp src/filewatcher.cpp -o SyncIt;
+if [ $? -eq 0 ]
+then
+	echo "\nOK";
+	./SyncIt
+fi

@@ -7,6 +7,8 @@ class Logger
     private:
         Logger();
         static void CheckLogFileIsOpen();
+        static std::string GetCurrentDate();
+        static std::string GetCurrentTime();
         static std::ofstream s_logfile;
         static const std::string LOG_FILE_NAME ;
 

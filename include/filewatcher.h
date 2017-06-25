@@ -23,10 +23,14 @@ class FileWatcher
 
         bool LoadFilesToWatch();
 
+        bool m_iswatching;
+
     public:
 
         FileWatcher();
 
         bool StartWatch();
+
+        bool IsWatching();
 
 };

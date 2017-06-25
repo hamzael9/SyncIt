@@ -5,9 +5,7 @@
 std::vector<watched_file> FileWatcher::m_watched_files;
 
 
-FileWatcher::FileWatcher()
-{
-}
+FileWatcher::FileWatcher() {}
 
 bool FileWatcher::LoadFilesToWatch()
 {
@@ -21,5 +19,11 @@ bool FileWatcher::LoadFilesToWatch()
 bool FileWatcher::StartWatch()
 {
     Logger::LogInfo("[FILE WATCHER] : Start Watching files");
+    m_iswatching = true;
     return true;
+}
+
+bool FileWatcher::IsWatching()
+{
+    return m_iswatching;
 }
