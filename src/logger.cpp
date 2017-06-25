@@ -10,13 +10,13 @@ Logger::Logger() {}
 void Logger::LogInfo(std::string p_msg)
 {
     Logger::CheckLogFileIsOpen();
-    Logger::s_logfile << Logger::GetCurrentTime() << " [INFO] : " << p_msg << std::endl;
+    Logger::s_logfile <<  "[INFO] : " << p_msg << "  ( " << Logger::GetCurrentTime() << " )" <<  std::endl;
 }
 
 void Logger::LogError(std::string p_msg)
 {
     Logger::CheckLogFileIsOpen();
-    Logger::s_logfile << Logger::GetCurrentTime() << " [ERROR] : " << p_msg << std::endl;
+    Logger::s_logfile <<  "[ERROR] : " << p_msg << "  ( " << Logger::GetCurrentTime() << " )" <<  std::endl;
 }
 
 void Logger::CheckLogFileIsOpen()
@@ -57,9 +57,9 @@ std::string Logger::GetCurrentTime()
     local_time = localtime(&current_time);
 
     std::string ret = std::to_string(local_time->tm_hour);
-    ret += "/";
+    ret += ":";
     ret+= std::to_string(local_time->tm_min);
-    ret += "/";
+    ret += ":";
     ret+= std::to_string(local_time->tm_sec);
 
     return ret;

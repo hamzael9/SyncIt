@@ -5,7 +5,10 @@
 std::vector<watched_file> FileWatcher::m_watched_files;
 
 
-FileWatcher::FileWatcher() {}
+FileWatcher::FileWatcher()
+{
+    LoadFilesToWatch();
+}
 
 bool FileWatcher::LoadFilesToWatch()
 {
@@ -16,14 +19,32 @@ bool FileWatcher::LoadFilesToWatch()
     return true;
 }
 
-bool FileWatcher::StartWatch()
+void FileWatcher::InitWatch()
 {
     Logger::LogInfo("[FILE WATCHER] : Start Watching files");
     m_iswatching = true;
-    return true;
 }
 
-bool FileWatcher::IsWatching()
+bool FileWatcher::StartedWatching()
 {
     return m_iswatching;
+}
+
+bool FileWatcher::FileChanged()
+{
+    CheckForChanges();
+    return m_changesExist;
+}
+
+void FileWatcher::CheckForChanges()
+{
+    // TODO: Check for changes
+    m_changesExist = true;
+}
+
+void FileWatcher::SyncChangedFiles()
+{
+    // TODO: Implement it using threads
+
+    Logger::LogInfo("[FILE WATCHER] : Syncing Changed Files");
 }

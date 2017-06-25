@@ -49,10 +49,10 @@ int daemonize()
 
 void AskToDaemonize()
 {
-        std::cout << " Do you want SyncIt to run as a daemon ? [y/n]:  ";
+        std::cout << "\n Do you want SyncIt to run as a daemon ? [y/n]:  ";
         std::string answer;
         std::cin >> answer;
-        std::cout << std::endl << " ... " << std::endl;
+        std::cout << std::endl << " ... \n" << std::endl;
         int ret;
         if ( answer.compare("y") == 0 )
         {
@@ -65,20 +65,28 @@ void AskToDaemonize()
         }
 }
 
-int main ()
+int main (int argc, char* argv[])
 {
         std::cout << "\tWelcome to SyncIt !" << std::endl;
 
+//change the process name ( still dangerous )
+/* 
+        char *process_name = "aaa\0";
+        memcpy((void *)argv[0], process_name, sizeof(process_name));
+*/
         AskToDaemonize();
 
-        //FileWatcher fw;
+        FileWatcher fw;
+        if ( !fw.StartedWatching() )
+            fw.InitWatch();
         
         while ( true )
         {
             sleep(2);
-            Logger::LogInfo("running");
-            //if ( !fw.IsWatching() )
-            //    fw.StartWatch();
+            if (fw.FileChanged())
+            {
+                fw.SyncChangedFiles();
+            }
         }
 
         return EXIT_SUCCESS;

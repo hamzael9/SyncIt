@@ -23,14 +23,22 @@ class FileWatcher
 
         bool LoadFilesToWatch();
 
+        void CheckForChanges();
+
         bool m_iswatching;
+
+        bool m_changesExist;
 
     public:
 
         FileWatcher();
 
-        bool StartWatch();
+        void InitWatch();
 
-        bool IsWatching();
+        bool StartedWatching();
+
+        bool FileChanged();
+
+        void SyncChangedFiles();
 
 };
