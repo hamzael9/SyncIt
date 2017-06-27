@@ -83,10 +83,10 @@ int main (int argc, char* argv[])
         
         if ( fw.StartedWatching() )
         {
-            //int clock = fw.getClock();
+            int clock = fw.getClock();
             while ( true )
             {
-                sleep(5);
+                sleep(clock);
                 if (fw.FileChanged())
                 {
                     fw.SyncChangedFiles();

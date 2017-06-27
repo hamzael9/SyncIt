@@ -41,8 +41,6 @@ void FileWatcher::LoadFilesToWatch()
 void FileWatcher::InitWatch()
 {
     Logger::LogInfo("[FILE WATCHER] : Start Watching files");
-    for (auto f : m_watched_files)
-        Logger::LogInfo("file name : " + f.file_name);
 
     for (auto &file : m_watched_files)
     {
