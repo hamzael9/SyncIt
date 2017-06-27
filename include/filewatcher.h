@@ -1,10 +1,10 @@
 #include <string>
 #include <vector>
 
+//#include <sys/stat.h>
+//#include <unistd.h>
 #include <sys/stat.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#include <ctime>
 
 
 struct watched_file
@@ -17,11 +17,11 @@ class FileWatcher
 {
     private:
 
-        struct stat m_file_stat; // buffer where to store stat sys call result
+        struct stat m_stat; // buffer where to store stat sys call result
 
-        static std::vector<watched_file> m_watched_files;
+        std::vector<watched_file> m_watched_files; 
 
-        bool LoadFilesToWatch();
+        void LoadFilesToWatch();
 
         void CheckForChanges();
 
@@ -29,9 +29,15 @@ class FileWatcher
 
         bool m_changesExist;
 
+        std::string CONFIG_FILE_PATH; 
+
+        int CLOCK;
+
     public:
 
         FileWatcher();
+
+        int getClock(); // getter for the clock
 
         void InitWatch();
 

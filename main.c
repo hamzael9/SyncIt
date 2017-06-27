@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
+
 	struct stat file_stat;
 	time_t last_mtime, now_mtime;
 	time_t last_mtimes[number_of_files];

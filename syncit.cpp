@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include <string>
 
 #include "include/logger.h"
@@ -80,14 +81,23 @@ int main (int argc, char* argv[])
         if ( !fw.StartedWatching() )
             fw.InitWatch();
         
-        while ( true )
+        if ( fw.StartedWatching() )
         {
-            sleep(2);
-            if (fw.FileChanged())
+            //int clock = fw.getClock();
+            while ( true )
             {
-                fw.SyncChangedFiles();
+                sleep(5);
+                if (fw.FileChanged())
+                {
+                    fw.SyncChangedFiles();
+                }
             }
         }
+        else
+        {
+            Logger::LogError("no checking");
+        }
+        
 
         return EXIT_SUCCESS;
 }

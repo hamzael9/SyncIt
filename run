@@ -1,6 +1,6 @@
 clear;
 echo -e "\nCompiling ...  ";
-g++ syncit.cpp src/logger.cpp src/filewatcher.cpp -o SyncIt;
+g++ -std=c++11 syncit.cpp src/logger.cpp src/filewatcher.cpp -o SyncIt;
 if [ $? -eq 0 ]
 then
 	echo -e "\nRunning  ... \n\n";
