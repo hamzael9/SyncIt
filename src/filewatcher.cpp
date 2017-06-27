@@ -9,6 +9,7 @@
 
 FileWatcher::FileWatcher()
 {
+    m_watched_files = {};
     CONFIG_FILE_PATH = "/Users/hamza/Work/programming/SyncIt/config";
     CLOCK = 5;
     LoadFilesToWatch();
@@ -31,8 +32,7 @@ void FileWatcher::LoadFilesToWatch()
     while ( std::getline(config_file, line) )
     {
         watched_file f;
-        f.file_name = line.c_str();
-//      Logger::LogInfo("add : " + std::string(f.file_name));
+        f.file_name = line;
         m_watched_files.push_back(f);
     }
 
@@ -42,13 +42,13 @@ void FileWatcher::InitWatch()
 {
     Logger::LogInfo("[FILE WATCHER] : Start Watching files");
     for (auto f : m_watched_files)
-        Logger::LogInfo("file name : " + std::string(f.file_name));
+        Logger::LogInfo("file name : " + f.file_name);
 
     for (auto &file : m_watched_files)
     {
-        Logger::LogInfo("File Init : " + std::string(file.file_name) );
+        Logger::LogInfo("File Init : " + file.file_name );
 
-        if (stat(file.file_name,&m_stat)  == 0 )
+        if (stat(file.file_name.c_str(),&m_stat)  == 0 )
         {
             file.last_mtime = m_stat.st_mtime;
             m_iswatching = true;
@@ -79,13 +79,13 @@ void FileWatcher::CheckForChanges()
     m_changesExist = false;
     for (auto &file : FileWatcher::m_watched_files)
     {
-        Logger::LogInfo("Check For Changes : " + std::string(file.file_name) );
-        if ( stat(file.file_name,&m_stat) == 0 )
+        Logger::LogInfo("Check For Changes : " + file.file_name );
+        if ( stat(file.file_name.c_str(),&m_stat) == 0 )
         {
             if ( file.last_mtime < m_stat.st_mtime )
             {
                 file.last_mtime = m_stat.st_mtime;
-                Logger::LogInfo("[FILE WATCHER] : " + std::string(file.file_name) + " changed !");
+                Logger::LogInfo("[FILE WATCHER] : " + file.file_name + " changed !");
                 m_changesExist = true;
             }
         }

@@ -9,7 +9,7 @@
 
 struct watched_file
 {
-    const char* file_name;
+    std::string file_name;
     time_t last_mtime;
 };
 
@@ -19,7 +19,7 @@ class FileWatcher
 
         struct stat m_stat; // buffer where to store stat sys call result
 
-        std::vector<watched_file> m_watched_files; 
+        std::vector<watched_file> m_watched_files;
 
         void LoadFilesToWatch();
 
