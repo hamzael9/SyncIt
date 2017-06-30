@@ -14,6 +14,7 @@ void processTerminationHandler(int signum)
     Logger::CloseLogFile();
     exit(signum);
 }
+
 int daemonize()
 {
         pid_t pid, sid;
@@ -45,11 +46,12 @@ int daemonize()
             return EXIT_FAILURE;
         }
 
-        //
+
+        // handle kill signal
         signal(SIGTERM, processTerminationHandler);
 
-        // close standard input/outputs
 
+        // close standard input/outputs
         close(STDIN_FILENO);
         close(STDOUT_FILENO);
         close(STDERR_FILENO);
@@ -84,22 +86,25 @@ int main (int argc, char* argv[])
         char *process_name = "aaa\0";
         memcpy((void *)argv[0], process_name, sizeof(process_name));
 */
+
         AskToDaemonize();
 
+
         FileWatcher fw;
+
         if ( !fw.StartedWatching() )
             fw.InitWatch();
-        
+
+
         if ( fw.StartedWatching() )
         {
-            int clock = fw.GetClock();
+            int checking_frequency = fw.GetClock();
+
             while ( true )
             {
-                sleep(clock);
+                sleep(checking_frequency);
                 if (fw.FilesHaveChanged())
-                {
                     fw.SyncChangedFiles();
-                }
             }
         }
         else
