@@ -19,6 +19,8 @@ class Logger
         static void LogError(std::string p_msg);
 
         static void LogInfo(std::string p_msg);
+        
+        static void CloseLogFile();
 
         ~ Logger();
 

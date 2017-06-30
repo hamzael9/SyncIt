@@ -21,6 +21,8 @@ class FileWatcher
 
         std::vector<watched_file> m_watched_files;
 
+        std::vector<std::string> m_files_to_sync;
+
         void LoadFilesToWatch();
 
         void CheckForChanges();
@@ -31,19 +33,19 @@ class FileWatcher
 
         std::string CONFIG_FILE_PATH; 
 
-        int CLOCK;
+        int m_clock;
 
     public:
 
         FileWatcher();
 
-        int getClock(); // getter for the clock
+        int GetClock(); // getter for the clock
 
         void InitWatch();
 
         bool StartedWatching();
 
-        bool FileChanged();
+        bool FilesHaveChanged();
 
         void SyncChangedFiles();
 

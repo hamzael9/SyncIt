@@ -3382,3 +3382,14 @@
 [INFO] : Check For Changes : /Users/hamza/Work/programming/SyncIt/tests/file2  ( 23:14:47 )
 [INFO] : Check For Changes : /Users/hamza/Work/programming/SyncIt/tests/file1  ( 23:14:52 )
 [INFO] : Check For Changes : /Users/hamza/Work/programming/SyncIt/tests/file2  ( 23:14:52 )
+--------- 30/6/2017---------
+[INFO] : [FILE WATCHER] : Start Watching files  ( 6:41:10 )
+[INFO] : File Init : /Users/hamza/Work/programming/SyncIt/tests/file1  ( 6:41:10 )
+[INFO] : File Init : /Users/hamza/Work/programming/SyncIt/tests/file2  ( 6:41:10 )
+--------- 30/6/2017---------
+[INFO] : [FILE WATCHER] : Start Watching files  ( 6:50:22 )
+[INFO] : File Init : /Users/hamza/Work/programming/SyncIt/tests/file1  ( 6:50:22 )
+[INFO] : File Init : /Users/hamza/Work/programming/SyncIt/tests/file2  ( 6:50:22 )
+[INFO] : Check For Changes : /Users/hamza/Work/programming/SyncIt/tests/file1  ( 6:50:27 )
+[INFO] : Check For Changes : /Users/hamza/Work/programming/SyncIt/tests/file2  ( 6:50:27 )
+[INFO] : [LOGGER] : CLOSING LOG FILE ...  ( 6:50:27 )

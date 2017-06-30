@@ -1,8 +1,9 @@
-#include "../include/filewatcher.h"
-#include "../include/logger.h"
-
 #include <string>
 #include <fstream>
+
+#include "../include/filewatcher.h"
+#include "../include/logger.h"
+#include "../include/filesynchronizer.h"
 
 //std::vector<watched_file> FileWatcher::m_watched_files;
 
@@ -11,9 +12,14 @@ FileWatcher::FileWatcher()
 {
     m_watched_files = {};
     CONFIG_FILE_PATH = "/Users/hamza/Work/programming/SyncIt/config";
-    CLOCK = 5;
+    m_clock = 5;
     LoadFilesToWatch();
     m_iswatching = false;
+}
+
+int FileWatcher::GetClock()
+{
+    return m_clock;
 }
 
 void FileWatcher::LoadFilesToWatch()
@@ -42,6 +48,7 @@ void FileWatcher::InitWatch()
 {
     Logger::LogInfo("[FILE WATCHER] : Start Watching files");
 
+    m_iswatching = false;
     for (auto &file : m_watched_files)
     {
         Logger::LogInfo("File Init : " + file.file_name );
@@ -53,11 +60,9 @@ void FileWatcher::InitWatch()
         }
         else
         {
-            m_iswatching = false;
             Logger::LogError("Stat Error ! ");
         }
     }
-
 }
 
 bool FileWatcher::StartedWatching()
@@ -65,7 +70,7 @@ bool FileWatcher::StartedWatching()
     return m_iswatching;
 }
 
-bool FileWatcher::FileChanged()
+bool FileWatcher::FilesHaveChanged()
 {
     CheckForChanges();
     return m_changesExist;
@@ -84,6 +89,7 @@ void FileWatcher::CheckForChanges()
             {
                 file.last_mtime = m_stat.st_mtime;
                 Logger::LogInfo("[FILE WATCHER] : " + file.file_name + " changed !");
+                m_files_to_sync.push_back(file.file_name);
                 m_changesExist = true;
             }
         }
@@ -94,5 +100,9 @@ void FileWatcher::SyncChangedFiles()
 {
     // TODO: Implement it using threads
     Logger::LogInfo("[FILE WATCHER] : Syncing Changed Files");
-
+    for (auto f : m_files_to_sync)
+    {
+        FileSynchronizer fs (f);
+        fs.Sync();
+    }
 }

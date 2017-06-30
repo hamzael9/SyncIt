@@ -31,6 +31,12 @@ void Logger::CheckLogFileIsOpen()
     }
 }
 
+void Logger::CloseLogFile()
+{
+    Logger::LogInfo("[LOGGER] : CLOSING LOG FILE ...");
+    Logger::s_logfile.close();
+}
+
 std::string Logger::GetCurrentDate()
 {
     time_t current_time;

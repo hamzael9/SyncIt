@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <csignal>
 #include <string>
 
 #include "include/logger.h"
@@ -8,6 +9,11 @@
 
 bool isForked = false;
 
+void processTerminationHandler(int signum)
+{
+    Logger::CloseLogFile();
+    exit(signum);
+}
 int daemonize()
 {
         pid_t pid, sid;
@@ -38,6 +44,9 @@ int daemonize()
             std::cout << "CHDIR failed with code : " << ret << std::endl;
             return EXIT_FAILURE;
         }
+
+        //
+        signal(SIGTERM, processTerminationHandler);
 
         // close standard input/outputs
 
@@ -83,11 +92,11 @@ int main (int argc, char* argv[])
         
         if ( fw.StartedWatching() )
         {
-            int clock = fw.getClock();
+            int clock = fw.GetClock();
             while ( true )
             {
                 sleep(clock);
-                if (fw.FileChanged())
+                if (fw.FilesHaveChanged())
                 {
                     fw.SyncChangedFiles();
                 }
